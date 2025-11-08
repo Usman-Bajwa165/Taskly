@@ -1,2 +1,2 @@
-// api/index.ts  (repo root)
-export { default } from "../src/index";
+import handler from "../src/index"; // import TypeScript source so types are available
+export default handler;
