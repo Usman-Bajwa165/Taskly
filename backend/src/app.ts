@@ -9,19 +9,37 @@ import routes from "./routes";
 
 const app = express();
 
-// Use FRONTEND_URL env to control CORS in production
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+// Read FRONTEND_URL from env. Support a comma-separated list for multiple origins.
+const rawFrontends = (process.env.FRONTEND_URL || "").trim();
+const allowedOrigins = rawFrontends
+  ? rawFrontends.split(",").map(s => s.trim()).filter(Boolean)
+  : []; // empty => no origin allowed except server-to-server requests
+
+// Debug helper: uncomment only while debugging (then remove)
+// console.log("Allowed origins:", allowedOrigins);
 
 const corsOptions = {
-  // allow non-browser clients (curl/postman) when origin is undefined
   origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-    if (!origin) return callback(null, true); // server-to-server or curl
-    if (FRONTEND_URL === "*" || origin === FRONTEND_URL) return callback(null, true);
+    // allow non-browser requests (curl/postman) where origin is undefined
+    if (!origin) return callback(null, true);
+
+    // allow all if FRONTEND_URL was set to "*" explicitly
+    if (allowedOrigins.includes("*")) return callback(null, true);
+
+    // allow if origin matches one of allowedOrigins
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    // otherwise block
     return callback(new Error("CORS not allowed by FRONTEND_URL"));
   },
   credentials: true,
+  // let the cors package set sensible defaults for Access-Control-Allow-Headers/Methods
 };
 
+// handle preflight requests for all routes
+app.options("*", cors(corsOptions));
+
+// global middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 
@@ -29,6 +47,7 @@ if (process.env.NODE_ENV !== "test") {
   app.use(morgan("dev"));
 }
 
+// health endpoints (root and under /api if you want them both)
 app.get("/health", (_req, res) => res.json({ ok: true, ts: Date.now() }));
 
 // mount API routes
