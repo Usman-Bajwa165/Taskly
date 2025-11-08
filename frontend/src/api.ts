@@ -1,7 +1,12 @@
 // src/Api.ts
+// src/Api.ts
 import axios from "axios";
 
-const baseURL = (import.meta as any).env?.VITE_API_URL ?? "http://localhost:4000/api";
+const raw = (import.meta as any).env?.VITE_API_URL ?? "http://localhost:4000";
+const baseURL = raw.endsWith("/api") ? raw : `${raw.replace(/\/$/, "")}/api`;
+
+console.log("API baseURL:", baseURL); 
+
 const api = axios.create({ baseURL, timeout: 7000 });
 
 export const setAuthToken = (token: string | null) => {
