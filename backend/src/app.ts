@@ -9,7 +9,20 @@ import routes from "./routes";
 
 const app = express();
 
-app.use(cors());
+// Use FRONTEND_URL env to control CORS in production
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+
+const corsOptions = {
+  // allow non-browser clients (curl/postman) when origin is undefined
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    if (!origin) return callback(null, true); // server-to-server or curl
+    if (FRONTEND_URL === "*" || origin === FRONTEND_URL) return callback(null, true);
+    return callback(new Error("CORS not allowed by FRONTEND_URL"));
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 if (process.env.NODE_ENV !== "test") {
