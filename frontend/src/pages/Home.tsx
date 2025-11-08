@@ -84,7 +84,6 @@ export default function Home() {
                 </div>
 
                 <div style={{ marginTop: 12, textAlign: "right" }}>
-                  <small className="text-muted">Example preview</small>
                 </div>
               </div>
             </div>
