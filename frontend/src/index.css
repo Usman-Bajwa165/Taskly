@@ -1,0 +1,138 @@
+/* Bootstrap CSS import */
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css";
+
+/* Font */
+:root { --surface: rgba(255,255,255,0.85); }
+html, body, #root { height: 100%; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(99,102,241,0.06), transparent 12%),
+              radial-gradient(900px 400px at 90% 90%, rgba(99,102,241,0.04), transparent 12%),
+              linear-gradient(180deg, #f8fafc 0%, #f0f6ff 100%);
+  color: #0f172a;
+}
+
+/* Center shell */
+.app-shell {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Modern glass card */
+.glass-card {
+  max-width: 720px;
+  width: 100%;
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.08);
+  border: 1px solid rgba(255,255,255,0.5);
+  backdrop-filter: blur(6px) saturate(120%);
+}
+
+/* Input tweaks */
+.form-control {
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+/* Primary gradient button */
+.btn-primary {
+  background-image: linear-gradient(90deg,#6366f1,#8b5cf6);
+  border: none;
+  padding: 0.7rem 1.2rem;
+  font-weight: 600;
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(99,102,241,0.14);
+}
+.btn-primary:active { transform: translateY(1px); }
+
+/* subtle nav */
+.site-nav { padding: 0.8rem 2rem; }
+
+/* small helpers */
+.small-muted { color: #64748b; font-size: .95rem; }
+.form-actions { display:flex; gap:0.75rem; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+/* make table header sticky and tbody scrollable */
+.table-responsive-scroll {
+  max-height: calc(100vh - 220px); /* adjust to your layout */
+  overflow: auto;
+}
+
+/* sticky header */
+.table-responsive-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+  backdrop-filter: blur(2px);
+}
+
+/* keep table layout stable */
+.table-responsive-scroll table {
+  width: 100%;
+  border-collapse: separate;
+}
+
+/* limit only tbody to scroll within the container */
+.table-responsive-scroll tbody tr td {
+  vertical-align: middle;
+}
+
+/* Modern small icon button for password visibility */
+.btn-icon {
+  border: 0;
+  background: transparent;
+  padding: 0.25rem 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280; /* subtle gray */
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  border-radius: 6px;
+}
+
+.btn-icon:hover {
+  background: rgba(0,0,0,0.04);
+  color: #111827;
+}
+
+/* Prevent the button from looking like a form-control sibling (keeps neat spacing) */
+.input-group-password .form-control {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/* If the button sits inside an input-group, tighten spacing */
+.input-group-password .btn-icon {
+  margin-left: -3.5rem; /* visually overlap the end of input slightly */
+  z-index: 2;
+}
+
+/* Ensure the input doesn't hide rightmost characters when icon overlaps */
+.input-group-password .form-control {
+  padding-right: 3.25rem;
+}
+
+/* Small spinner alignment in input-group */
+.input-group .spinner-border {
+  width: 1rem;
+  height: 1rem;
+}
+
+.feature-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  box-shadow: 0 6px 18px rgba(10,10,20,0.04);
+}
