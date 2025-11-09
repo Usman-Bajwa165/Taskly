@@ -1,20 +1,20 @@
-// src/index.ts — Vercel serverless handler (DO NOT start a local server here)
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import app from "./app";               // note: "./app" (relative)
+// src/index.ts
+import app from "./app";
 import { connectDB } from "./config/db";
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  try {
-    const uri = process.env.MONGO_URI || "";
-    if (!uri) {
-      console.error("No MONGO_URI provided to Vercel function.");
-      return res.status(500).json({ error: "Missing MONGO_URI" });
-    }
-    await connectDB(uri);
-  } catch (err) {
-    console.error("DB connect error:", err);
-    return res.status(500).json({ error: "DB connection failed" });
-  }
+const PORT = process.env.PORT || 4000;
+const MONGO_URI = process.env.MONGO_URI || "";
 
-  (app as any)(req, res);
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
+
+if (MONGO_URI) {
+  connectDB(MONGO_URI).catch((err) => {
+    console.warn("⚠️ MongoDB connection failed (server kept alive):", err.message || err);
+  });
+} else {
+  console.log("⚠️ No MONGO_URI provided — skipping DB connection.");
 }
+
+export default app;
