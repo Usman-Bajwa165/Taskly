@@ -19,6 +19,6 @@ if (process.env.NODE_ENV !== "test") {
 app.get("/health", (_req, res) => res.json({ ok: true, ts: Date.now() }));
 
 // mount API routes
-app.use("/", routes);
+app.use("/api", routes);
 
 export default app;

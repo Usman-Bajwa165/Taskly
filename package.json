@@ -1,26 +1,22 @@
 {
   "name": "taskly",
   "version": "1.0.0",
-  "private": true,
   "main": "index.js",
-  "engines": {
-    "node": "22.x"
-  },
   "scripts": {
     "dev": "concurrently \"npm:dev-backend\" \"npm:dev-frontend\"",
     "dev-backend": "cd backend && npm run dev",
-    "dev-frontend": "cd frontend && npm run dev",
-    "build:backend": "npm --prefix backend install && npm --prefix backend run build",
-    "build:frontend": "npm --prefix frontend install && npm --prefix frontend run build",
-    "build": "npm run build:backend && npm run build:frontend"
+    "dev-frontend": "cd frontend && npm run dev"
   },
-  "dependencies": {
-    "nodemailer": "^7.0.10",
-    "serverless-http": "^3.0.0"
-  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "@types/nodemailer": "^7.0.3",
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.10"
   }
 }
